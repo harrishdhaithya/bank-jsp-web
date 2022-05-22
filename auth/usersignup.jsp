@@ -10,6 +10,9 @@
     <script src="../js/auth/usersignup.js"></script>
 </head>
 <body>
+    <div class="loading-screen hide-box" id="loading">
+        <p class="loading-text">Loading...</p>
+    </div>
     <div class="nav-bar">
         <div class="inner-content">
             <img src="../img/logo.jpg" id="nav-img" alt="">

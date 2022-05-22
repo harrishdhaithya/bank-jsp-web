@@ -120,6 +120,21 @@ body{
     margin-top: 20px;
     display: none;
 }
+.loading-screen{
+    width: 100vw;
+    height: 100vh;
+    background-color: #251D3A;
+    opacity: 0.7;
+    position: absolute;
+    z-index: 100;
+}
+.loading-text{
+    font-size: 5rem;
+    position: absolute;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%,-50%);
+}
 html::-webkit-scrollbar {
     width: 10px;
   }

@@ -21,7 +21,7 @@ public class Otp {
 		}
 		return otp;
 	}
-	public static boolean evalOtp(String reciptant) {
+	public static boolean mailOTP(String otp,String reciptant) {
 		String mailid = System.getenv("email");
 		String password = System.getenv("password");
 		String host = "smtp.gmail.com";
@@ -38,7 +38,6 @@ public class Otp {
 				return new PasswordAuthentication(mailid, password);
 			}
 		});
-		String otp = generateOTP();
 		try {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(mailid));
@@ -46,18 +45,11 @@ public class Otp {
 			message.setSubject("Your One Time Password");
 			message.setText("OTP: "+otp);
 			Transport.send(message);
+			return true;
 		}catch(MessagingException e) {
 			System.out.println("Could not Send OTP");
 			System.out.println(e);
 			return false;
 		}
-		Scanner in = new Scanner(System.in);
-		System.out.println("Enter Your 4 Digit OTP: ");
-		String enteredOtp = in.nextLine();
-//		System.out.println(enteredOtp);
-		if(otp.equals(enteredOtp)) {
-			return true;
-		}
-		return false;
 	}
 }

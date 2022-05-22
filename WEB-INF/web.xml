@@ -51,4 +51,12 @@ version="2.5">
         <servlet-name>withdraw</servlet-name>
         <url-pattern>/user/withdraw</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>otp</servlet-name>
+        <servlet-class>service.auth.Otp</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>otp</servlet-name>
+        <url-pattern>/auth/user/otp</url-pattern>
+    </servlet-mapping>
 </web-app>

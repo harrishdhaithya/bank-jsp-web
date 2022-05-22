@@ -1,5 +1,7 @@
 function userSignup(event){
     event.preventDefault();
+    const loading = document.getElementById("loading");
+    loading.classList.remove("hide-box");
     const fname = document.getElementById("fname").value;
     const lname = document.getElementById("lname").value;
     const email = document.getElementById("email").value;
@@ -26,7 +28,7 @@ function userSignup(event){
     }).then(resp=>{
         if(resp.status==200){
             if(resp.redirected){
-                alert('Signup successfull.Go ahed and login.');
+                // alert('Signup successfull.Go ahed and login.');
                 location.href=resp.url;
                 return;
             }

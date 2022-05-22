@@ -7,7 +7,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.controller.Bank;
+import com.controller.Otp;
+import com.model.User;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,11 +47,15 @@ public class SignUp extends HttpServlet{
                 out.println("All the fields are required...");
                 return;
             }
-            boolean success = Bank.signup(fname, lname, phone, email, password, deposit);
+            User user = new User(fname, lname, phone, email, password, deposit);
+            HttpSession session = req.getSession(true);
+            session.setAttribute("user", user);
+            String OTP = Otp.generateOTP();
+            session.setAttribute("otp", OTP);
+            boolean success = Otp.mailOTP(OTP,email);
             if(success){
                 resp.setStatus(200);
-                out.println("Signup Successfull...Go Ahed and login");
-                resp.sendRedirect("/bank/auth/userlogin.jsp");
+                resp.sendRedirect("/bank/auth/otp.jsp");
                 return;
             }else{
                 resp.setStatus(400);
