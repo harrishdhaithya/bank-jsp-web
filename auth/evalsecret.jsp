@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bank Application</title>
     <link rel="stylesheet" href="../css/style.css">
-    <script src="../js/auth/adminauth.js"></script>
+    <script src="../js/auth/code.js"></script>
 </head>
 <body>
     <%
@@ -29,21 +29,16 @@
     </div>
     <div class="container">
         <div class="container-header">
-            Admin Login
+            Authenticator
         </div>
         <div class="container-body">
-            <form name="adminform" onsubmit="adminsignin(event);">
+            <form onsubmit="evalCode(event)">
                 <div class="form-name">
-                    <div>Email:</div>
-                    <input type="text" name="fname" id="email" class="form-text-box" required>
+                    <div>Open you Authenticator app and enter the 6 digit code:</div>
+                    <input type="text" name="code" id="code" class="form-text-box" required>
                 </div>
-                <div class="form-name">
-                    <div>Password:</div>
-                    <input type="password" name="password" id="password" class="form-text-box" required>
-                </div>
-                <input type="submit" class="form-submit-btn" >
+                <input type="submit" class="form-submit-btn">
             </form>
-            <button class="form-submit-btn" onclick="location.href='/bank'">Home</button>
         </div>
     </div>
 </body>

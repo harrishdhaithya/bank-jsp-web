@@ -58,7 +58,7 @@ body{
 }
 .form-submit-btn{
     text-align: center;
-    background-color: #DDDDDD;
+    background-color: #dddddd;
     font-size: large;
     padding: 13px;
     border: 2px solid black;
@@ -125,14 +125,14 @@ body{
     height: 100vh;
     background-color: #251D3A;
     opacity: 0.7;
-    position: absolute;
+    position: fixed;
     z-index: 100;
 }
 .loading-text{
     font-size: 5rem;
     position: absolute;
     left: 50%;
-    right: 50%;
+    top: 50%;
     transform: translate(-50%,-50%);
 }
 html::-webkit-scrollbar {

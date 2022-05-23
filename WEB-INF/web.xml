@@ -59,4 +59,12 @@ version="2.5">
         <servlet-name>otp</servlet-name>
         <url-pattern>/auth/user/otp</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>evalauth</servlet-name>
+        <servlet-class>service.auth.EvalAuth</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>evalauth</servlet-name>
+        <url-pattern>/auth/user/secret</url-pattern>
+    </servlet-mapping>
 </web-app>

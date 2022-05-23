@@ -43,6 +43,7 @@
                 </div>
                 <input type="submit" class="form-submit-btn">
             </form>
+            <button class="form-submit-btn" onclick="location.href='/bank'">Home</button>
         </div>
     </div>
 </body>

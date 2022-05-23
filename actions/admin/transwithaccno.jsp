@@ -45,6 +45,7 @@
             </form>
         </div>
         <div class="container-body hide-box" id="result"></div>
+        <button class="form-submit-btn" onclick="location.href='/bank/menu/adminmenu.jsp'">Home</button>
     </div>
 </body>
 </html>

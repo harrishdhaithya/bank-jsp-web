@@ -49,6 +49,7 @@
                     <p>Balance: <%=user.getBalance()%></p>
                 </div>
            <%}%>
+           <button class="form-submit-btn" onclick="location.href='/bank/menu/adminmenu.jsp'">Home</button>
         </div>
     </div>
 </body>

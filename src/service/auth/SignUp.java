@@ -8,17 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.controller.Bank;
 import com.controller.Otp;
 import com.model.User;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SignUp extends HttpServlet{
     private static final long serialVersionUID = 1L;
-    public SignUp(){}
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         BufferedReader br = req.getReader();
@@ -58,6 +54,7 @@ public class SignUp extends HttpServlet{
                 resp.sendRedirect("/bank/auth/otp.jsp");
                 return;
             }else{
+                session.invalidate();
                 resp.setStatus(400);
                 out.println("Something went wrong.");
                 return;

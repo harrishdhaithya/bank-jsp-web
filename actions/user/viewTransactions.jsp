@@ -50,6 +50,7 @@
                     <p>Time: <%=t.getTime()%></p>
                 </div>
             <%}%>
+           <button class="form-submit-btn" onclick="location.href='/bank/menu/usermenu.jsp'">Home</button>
         </div>
     </div>
 </body>

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import com.Singleton.Singleton;
 import com.dao.AdminDao;
+import com.dao.AdminSecretDao;
 import com.model.Admin;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +34,7 @@ public class AdminLogin extends HttpServlet {
             String email = obj.getString("email");
             String password = obj.getString("password");
             AdminDao adao = Singleton.getAdminDao();
+            AdminSecretDao asdao = Singleton.getAdminSecretDao();
             Admin admin = adao.getAdminByEmail(email);
             if(admin==null){
                 resp.setStatus(400);
@@ -42,12 +44,16 @@ public class AdminLogin extends HttpServlet {
             }
             if(admin.evalPassword(password)){
                 HttpSession session = req.getSession(true);
-                session.setAttribute("name", admin.getName());
-                session.setAttribute("empid", admin.getEmpid());
-                session.setAttribute("email", admin.getEmail());
+                // session.setAttribute("name", admin.getName());
+                // session.setAttribute("empid", admin.getEmpid());
+                // session.setAttribute("email", admin.getEmail());
+                // session.setAttribute("role", "admin");
+                session.setAttribute("user", admin);
+                session.setAttribute("secret", asdao.getSecret(admin.getEmpid()));
                 session.setAttribute("role", "admin");
                 resp.setStatus(200);
-                resp.sendRedirect("/bank/menu/adminmenu.jsp");
+                resp.sendRedirect("/bank/auth/evalsecret.jsp");
+                return;
             }
             
         }catch(JSONException ex){

@@ -47,6 +47,7 @@
                 </div>
                 <input type="submit" value="Make Transaction" class="form-submit-btn">
             </form>
+           <button class="form-submit-btn" onclick="location.href='/bank/menu/usermenu.jsp'">Home</button>
         </div>
     </div>
 </body>

@@ -9,14 +9,17 @@ function verifyOTP(event){
     fetch(`user/otp?${params.toString()}`)
     .then(resp=>{
         if(resp.status==200){
-            resp.text().then(res=>alert(res));
+            resp.text().then(res=>{
+                const secret = res;
+                const param = new URLSearchParams({secret});
+                location.href=`/bank/auth/showsecret.jsp?${param.toString()}`;
+            })
         }else{
             resp.text().then(res=>{
                 alert(res);
             })
+            location.href="/bank/auth/usersignup.jsp";
         }
-        if(resp.redirected){
-            location.href=resp.url;
-        }
+        
     }).catch(err=>alert(err))
 }

@@ -1,14 +1,18 @@
 package service.auth;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.Singleton.Singleton;
+import com.controller.TwoFAAuth;
 import com.dao.UserDao;
+import com.dao.UserSecretDao;
 import com.model.User;
+import com.model.UserSecret;
 
 public class Otp extends HttpServlet {
     @Override
@@ -17,38 +21,36 @@ public class Otp extends HttpServlet {
         HttpSession session = req.getSession(false);
         PrintWriter out = resp.getWriter();
         if(session==null){
-            resp.setStatus(400);
             resp.setContentType("text/plain");
-            out.println("Something went wrong...");
+            resp.sendError(400,"Something went wrong...");
             resp.sendRedirect("/bank/auth/usersignup.jsp");
             return;
         }
         String aotp = (String)session.getAttribute("otp");
         if(otp.equals(aotp)){
             User u = (User)session.getAttribute("user");
+            String secret = TwoFAAuth.generateSecretKey();
+            UserSecretDao usdao = Singleton.getUserSecretDao();
+            UserSecret us = new UserSecret(u.getAccno(), secret);
             UserDao udao = Singleton.getUserDao();
-            boolean success = udao.saveUser(u);
-            out.println(success);
-            if(!success){
-                resp.setStatus(400);
+            boolean success = udao.saveUser(u)&&usdao.saveSecret(us);
+            if(success){
                 resp.setContentType("text/plain");
-                out.println("Something went wrong...");
+                out.println(secret);
                 session.invalidate();
-                resp.sendRedirect("/bank/auth/usersignup.jsp");
+                resp.setStatus(200);
                 return;
             }
-            resp.setStatus(200);
-            resp.setContentType("text/plain");
-            out.println("SignUp successfull...Go ahed and login.");
             session.invalidate();
-            resp.sendRedirect("/bank/auth/userlogin.jsp");
+            resp.setContentType("text/plain");
+            out.println("Something went wrong...");
+            resp.setStatus(400);
             return;
         }
-        resp.setStatus(400);
+        session.invalidate();
         resp.setContentType("text/plain");
         out.println("Incorrect OTP...");
-        resp.sendRedirect("/bank/auth/usersignup.jsp");
-        session.invalidate();
+        resp.setStatus(400);
         return;
     }
 }

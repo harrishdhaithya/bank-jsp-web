@@ -44,6 +44,7 @@
             <h2>Phone Number: <%=user.getPhone()%></h2>
             <h2>Email: <%=user.getEmail()%></h2>
             <h2>Balance: <%=user.getBalance()%></h2>
+           <button class="form-submit-btn" onclick="location.href='/bank/menu/usermenu.jsp'">Home</button>
         </div>
     </div>
 </body>

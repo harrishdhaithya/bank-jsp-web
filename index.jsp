@@ -10,7 +10,7 @@
 </head>
 <body>
     <%
-        if(session.getAttribute("user")!=null){
+        if(session.getAttribute("name")!=null){
             if(session.getAttribute("role").equals("admin")){
                 response.sendRedirect("menu/adminmenu.jsp");
             }else{

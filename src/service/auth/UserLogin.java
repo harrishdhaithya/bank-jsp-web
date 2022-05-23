@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.Singleton.Singleton;
 import com.dao.UserDao;
+import com.dao.UserSecretDao;
 import com.model.User;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +39,7 @@ public class UserLogin extends HttpServlet {
             }
             UserDao ud = Singleton.getUserDao();
             User user = ud.getUserByEmail(email);
+            UserSecretDao udao = Singleton.getUserSecretDao();
             if(user==null){
                 resp.setStatus(500);
                 resp.setContentType("text/html");
@@ -46,13 +48,15 @@ public class UserLogin extends HttpServlet {
             }
             if(user.evalPassword(password)){
                 HttpSession session = req.getSession(true);
-                session.setAttribute("name", user.getFname());
-                session.setAttribute("accno", user.getAccno());
-                session.setAttribute("email", user.getEmail());
+                // session.setAttribute("name", user.getFname());
+                // session.setAttribute("accno", user.getAccno());
+                // session.setAttribute("email", user.getEmail());
+                // session.setAttribute("role", "user");
+                session.setAttribute("user", user);
+                session.setAttribute("secret", udao.getSecret(user.getAccno()));
                 session.setAttribute("role", "user");
                 resp.setStatus(200);
-                resp.setContentType("text/html");
-                resp.sendRedirect("/bank/menu/usermenu.jsp");
+                resp.sendRedirect("/bank/auth/evalsecret.jsp");
                 return;
             }else{
                 resp.setStatus(400);
