@@ -67,4 +67,12 @@ version="2.5">
         <servlet-name>evalauth</servlet-name>
         <url-pattern>/auth/user/secret</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>record</servlet-name>
+        <servlet-class>service.record.GenerateRecord</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>record</servlet-name>
+        <url-pattern>/record/generate</url-pattern>
+    </servlet-mapping>
 </web-app>
