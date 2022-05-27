@@ -33,7 +33,7 @@
     </div>
     <div class="container">
         <div class="container-header">
-            Search User
+            Extract Data
         </div>
         <div class="search-box">
             <form name="searchuser" onsubmit="extractDate(event);">

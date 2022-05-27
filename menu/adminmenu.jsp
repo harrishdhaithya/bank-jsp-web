@@ -59,6 +59,11 @@
                     Search Transaction By Account Number
                 </button>
             </form>
+            <form action="/bank/actions/admin/records.jsp" method="get">
+                <button type="submit" class="container-btn">
+                    Extract Transaction Records
+                </button>
+            </form>
         </div>
     </div>
 </body>

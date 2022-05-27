@@ -54,6 +54,31 @@ public class TransactionDao {
        }
        return li;
    }
+   public List<Transaction> getTransactionBetweenDate(String from,String to){
+       List<Transaction> li = new ArrayList<>();
+       try{
+           Connection conn = DbConnection.getConnection();
+            String sql = "SELECT * FROM public.\"Transaction\" where date>=? and date<=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setObject(1, LocalDate.parse(from));
+            ps.setObject(2, LocalDate.parse(to));
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String src = rs.getString("src");
+                String dest = rs.getString("dest");
+                double amount = rs.getDouble("amount");
+                String date = rs.getString("date");
+                String time = rs.getString("time");
+                Transaction t = new Transaction(id, src, dest, amount, date, time);
+                li.add(t);
+            }
+       }catch(Exception ex){
+           System.out.println("Not able to fetch transaction...");
+           System.out.println(ex);
+       }
+       return li;
+   }
    public List<Transaction> getTransactionsByAccno(String accno){
        List<Transaction> li = new ArrayList<>();
        try{

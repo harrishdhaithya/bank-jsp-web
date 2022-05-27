@@ -1,135 +1,175 @@
 package com.filegen;
 
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.io.File;
-import java.util.Random;
+import java.util.Map;
 import com.Singleton.Singleton;
 import com.dao.TransactionDao;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.colors.DeviceRgb;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
+import com.itextpdf.layout.properties.VerticalAlignment;
 import com.model.Transaction;
 
 
 
-
 public class GeneratePdf {
-    public static String generateRandom(){
-        String s = "";
-        Random rand = new Random();
-        for(int i=0;i<=4;i++){
-            s+=rand.nextInt(10);
-        }
-        return s;
-    }
-    public static File generateRecord(List<Transaction> transactions){
+    public static File generateRecord(Map<String,String> filter){
         File f=null;
+        String path = "records/";
+        SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd_hh_mm_ss");
+        String df = dformat.format(new Date());
+        String filepath = path+"transaction-"+df+".pdf";
+        System.out.println(filepath);
         try {
-            Document document = new Document();
-            document.setMargins(30F, 30F, 30F, 30F);
-            String path = "records/";
-            SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd_hh_mm_ss");
-            String df = dformat.format(new Date());
-            String filepath = path+"transaction-"+df+".pdf";
             f=new File(filepath);
-            OutputStream os = new FileOutputStream(f);
-            PdfWriter.getInstance(document, os);
-            document.open();
-            PdfPCell pdfPCell1 = new PdfPCell(new Paragraph("ID"));
-            pdfPCell1.setBackgroundColor(BaseColor.GRAY);
-            pdfPCell1.setPaddingTop(10F);
-            pdfPCell1.setPaddingBottom(10F);
-            pdfPCell1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            PdfPCell pdfPCell2 = new PdfPCell(new Paragraph("Source"));
-            pdfPCell2.setBackgroundColor(BaseColor.GRAY);
-            pdfPCell2.setPaddingTop(10F);
-            pdfPCell2.setPaddingBottom(10F);
-            pdfPCell2.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            PdfPCell pdfPCell3 = new PdfPCell(new Paragraph("Destination"));
-            pdfPCell3.setBackgroundColor(BaseColor.GRAY);
-            pdfPCell3.setPaddingTop(10F);
-            pdfPCell3.setPaddingBottom(10F);
-            pdfPCell3.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            PdfPCell pdfPCell4 = new PdfPCell(new Paragraph("Amount"));
-            pdfPCell4.setBackgroundColor(BaseColor.GRAY);
-            pdfPCell4.setPaddingTop(10F);
-            pdfPCell4.setPaddingBottom(10F);
-            pdfPCell4.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            PdfPCell pdfPCell5 = new PdfPCell(new Paragraph("Date"));
-            pdfPCell5.setBackgroundColor(BaseColor.GRAY);
-            pdfPCell5.setPaddingTop(10F);
-            pdfPCell5.setPaddingBottom(10F);
-            pdfPCell5.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            PdfPCell pdfPCell6 = new PdfPCell(new Paragraph("Time"));
-            pdfPCell6.setBackgroundColor(BaseColor.GRAY);
-            pdfPCell6.setPaddingTop(10F);
-            pdfPCell6.setPaddingBottom(10F);
-            pdfPCell6.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-            PdfPTable pdfPTable = new PdfPTable(new float[]{50F,100F,100F,100F,100F,100F});
-            pdfPTable.addCell(pdfPCell1);
-            pdfPTable.addCell(pdfPCell2);
-            pdfPTable.addCell(pdfPCell3);
-            pdfPTable.addCell(pdfPCell4);
-            pdfPTable.addCell(pdfPCell5);
-            pdfPTable.addCell(pdfPCell6);
-            for(Transaction t:transactions){
-                PdfPCell pdfPCelli1 = new PdfPCell(new Paragraph(Integer.toString(t.getId())));
-                // pdfPCell1.setBackgroundColor(BaseColor.GRAY);
-                pdfPCelli1.setPaddingTop(10F);
-                pdfPCelli1.setPaddingBottom(10F);
-                pdfPCelli1.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-                PdfPCell pdfPCelli2 = new PdfPCell(new Paragraph(t.getSrc()));
-                // pdfPCell2.setBackgroundColor(BaseColor.GRAY);
-                pdfPCelli2.setPaddingTop(10F);
-                pdfPCelli2.setPaddingBottom(10F);
-                pdfPCelli2.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-                PdfPCell pdfPCelli3 = new PdfPCell(new Paragraph(t.getDest()));
-                // pdfPCell3.setBackgroundColor(BaseColor.GRAY);
-                pdfPCelli3.setPaddingTop(10F);
-                pdfPCelli3.setPaddingBottom(10F);
-                pdfPCelli3.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-                PdfPCell pdfPCelli4 = new PdfPCell(new Paragraph(Double.toString(t.getAmount())));
-                // pdfPCell4.setBackgroundColor(BaseColor.GRAY);
-                pdfPCelli4.setPaddingTop(10F);
-                pdfPCelli4.setPaddingBottom(10F);
-                pdfPCelli4.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-                PdfPCell pdfPCelli5 = new PdfPCell(new Paragraph(t.getDate()));
-                // pdfPCell5.setBackgroundColor(BaseColor.GRAY);
-                pdfPCelli5.setPaddingTop(10F);
-                pdfPCelli5.setPaddingBottom(10F);
-                pdfPCelli5.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-                PdfPCell pdfPCelli6 = new PdfPCell(new Paragraph(t.getTime()));
-                // pdfPCell6.setBackgroundColor(BaseColor.GRAY);
-                pdfPCelli6.setPaddingTop(10F);
-                pdfPCelli6.setPaddingBottom(10F);
-                pdfPCelli6.setHorizontalAlignment(PdfPCell.ALIGN_CENTER);
-                pdfPTable.addCell(pdfPCelli1);
-                pdfPTable.addCell(pdfPCelli2);
-                pdfPTable.addCell(pdfPCelli3);
-                pdfPTable.addCell(pdfPCelli4);
-                pdfPTable.addCell(pdfPCelli5);
-                pdfPTable.addCell(pdfPCelli6);
+            PdfWriter writer = new PdfWriter(f);
+            PdfDocument pdfdoc = new PdfDocument(writer);
+            Document document = new Document(pdfdoc);
+            document.setMargins(30F, 30F, 30F, 30F);
+            Table header = new Table(new float[]{100F,500F});
+            header.setWidth(new UnitValue(UnitValue.PERCENT,100));
+            ImageData imgdata = ImageDataFactory.create("img/logo.jpg");
+            Cell logo = new Cell();
+            logo.add(new Image(imgdata).setHeight(100f).setWidth(new UnitValue(UnitValue.PERCENT,100)).setHeight(70));
+            Cell heading = new Cell();
+            heading.add(new Paragraph("Banking System").setFontSize(43f).setTextAlignment(TextAlignment.LEFT).setVerticalAlignment(VerticalAlignment.MIDDLE));
+            header.addCell(logo);
+            header.addCell(heading);
+            document.add(header);
+            Table trans = new Table(new float[]{50F,100F,100F,100F,100F,100F});
+            Cell title = new Cell(0,6);
+            title.add(new Paragraph("Transaction Records").setTextAlignment(TextAlignment.CENTER).setFontSize(28F));
+            trans.addCell(title);
+            List<Transaction> transactions = null;
+            TransactionDao tdao = Singleton.getTransactionDao();
+            if(filter==null){
+                transactions=tdao.getAllTransaction();
+                Cell description = new Cell(0, 6);
+                int size = transactions.size();
+                Paragraph p = new Paragraph();
+                if(size>0){
+                    String startDate = transactions.get(0).getDate();
+                    String endDate = transactions.get(size-1).getDate();
+                    p.add("Start Date: "+startDate+"\n");
+                    p.add("End Date: "+endDate+"\n");
+                    p.add("Total Number of transaction: "+size);
+                    // p.setBold();
+                    p.setFontSize(14);
+                }else{
+                    p.add("No Transactions Available...");
+                    // p.setBold();
+                    p.setFontSize(14);
+                }
+                description.add(p);
+                trans.addCell(description);
+            }else if(filter.get("name").equals("accno")){
+                transactions = tdao.getTransactionsByAccno(filter.get("accno"));
+                Cell description = new Cell(0,4);
+                Cell filterCell = new Cell(0,2);
+                Paragraph p1 = new Paragraph();
+                int size = transactions.size();
+                if(size>0){
+                    String startDate = transactions.get(0).getDate();
+                    String endDate = transactions.get(size-1).getDate();
+                    p1.add("Start Date: "+startDate+"\n");
+                    p1.add("End Date: "+endDate+"\n");
+                    p1.add("Total Number of transaction: "+size);
+                    p1.setBold();
+                }else{
+                    p1.add("No Transactions Available...");
+                    p1.setBold();
+                }
+                description.add(p1);
+                Paragraph p2 = new Paragraph();
+                p2.add("Filter:\n");
+                p2.add("Source Account Number: "+filter.get("accno"));
+                p2.setBold();
+                filterCell.add(p2);
+                trans.addCell(description);
+                trans.addCell(filterCell);
+            }else if(filter.get("name").equals("date")){
+                transactions=tdao.getTransactionsByDate(filter.get("date"));
+                Cell description = new Cell(0,4);
+                Cell filterCell = new Cell(0,2);
+                Paragraph p1 = new Paragraph();
+                int size = transactions.size();
+                if(size>0){
+                    String startDate = transactions.get(0).getDate();
+                    String endDate = transactions.get(size-1).getDate();
+                    p1.add("Start Date: "+startDate+"\n");
+                    p1.add("End Date: "+endDate+"\n");
+                    p1.add("Total Number of transaction: "+size);
+                    p1.setBold();
+                }else{
+                    p1.add("No Transactions Available...");
+                    p1.setBold();
+                }
+                description.add(p1);
+                Paragraph p2 = new Paragraph();
+                p2.add("Filter:\n");
+                p2.add("Date of Transaction: "+filter.get("date"));
+                p2.setBold();
+                filterCell.add(p2);
+                trans.addCell(description);
+                trans.addCell(filterCell);
+            }else{
+                document.close();
+                throw new Exception("Illegal Filter");
             }
-            document.add(pdfPTable);
+            String[] headings = {"ID","Source","Destination","Amount","Date","Time"};
+            for(String h:headings){
+                Cell cell1 = new Cell();
+                cell1.add(new Paragraph(h));
+                cell1.setBackgroundColor(DeviceRgb.GREEN);
+                cell1.setTextAlignment(TextAlignment.CENTER);
+                cell1.setPaddingTop(10f);
+                cell1.setPaddingBottom(10f);
+                trans.addCell(cell1);
+            }
+            for(Transaction t:transactions){
+                String id = Integer.toString(t.getId());
+                String src = t.getSrc();
+                String dest = t.getDest();
+                String amount = Double.toString(t.getAmount());
+                String date = t.getDate();
+                String time = t.getTime();
+                String[] datas = {id,src,dest,amount,date,time};
+                for(String data:datas){
+                    Cell celli1 = new Cell();
+                    celli1.add(new Paragraph(data));
+                    celli1.setTextAlignment(TextAlignment.CENTER);
+                    celli1.setPaddingTop(8f);
+                    celli1.setPaddingBottom(8f);
+                    trans.addCell(celli1);
+                }
+            }
+            document.add(trans);
             document.close();
-            os.close();
- 
         } catch (Exception e) {
-            System.out.println("Exception caught...");
             f=null;
+            System.out.println(e);
+            System.out.println("Exception caught...");
         }
+        
         return f;
     }
-    public static void main(String args[]) throws Exception {           
-        TransactionDao tdao = Singleton.getTransactionDao();
-        File f=generateRecord(tdao.getAllTransaction());
-        
-     } 
+    public static void main(String[] args) {
+        Map<String,String> map = new HashMap<>();
+        map.put("name","accno");
+        map.put("accno","1574930394");
+        generateRecord(map);
+    }
 }

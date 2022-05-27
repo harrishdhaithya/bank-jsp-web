@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.Singleton.Singleton;
-import com.dao.TransactionDao;
 import com.filegen.GeneratePdf;
 import com.filegen.GenerateXls;
 
@@ -19,7 +19,6 @@ public class GenerateRecord extends HttpServlet {
         String filter = req.getParameter("filter");
         String format = req.getParameter("format");
         PrintWriter out = resp.getWriter();
-        TransactionDao tdao = Singleton.getTransactionDao();
         if(
             filter==null||
             format==null
@@ -37,8 +36,11 @@ public class GenerateRecord extends HttpServlet {
                 out.println("Something went wrong...");
                 return;
             }
+            Map<String,String> filterMap = new HashMap<>();
+            filterMap.put("name","date");
+            filterMap.put("date",date);
             if(format.equals("pdf")){
-                File f = GeneratePdf.generateRecord(tdao.getTransactionsByDate(date));
+                File f = GeneratePdf.generateRecord(filterMap);
                 if(f==null){
                     resp.setStatus(400);
                     resp.setContentType("text/plain");
@@ -56,7 +58,7 @@ public class GenerateRecord extends HttpServlet {
                 out.close();
                 return;
             }else if(format.equals("xls")){
-                File f = GenerateXls.generateRecord(tdao.getTransactionsByDate(date));
+                File f = GenerateXls.generateRecord(filterMap);
                 if(f==null){
                     resp.setStatus(400);
                     resp.setContentType("text/plain");
@@ -82,8 +84,11 @@ public class GenerateRecord extends HttpServlet {
                 out.println("Something went wrong...");
                 return;
             }
+            Map<String,String> filterMap = new HashMap<>();
+            filterMap.put("name","accno");
+            filterMap.put("accno",accno);
             if(format.equals("pdf")){
-                File f = GeneratePdf.generateRecord(tdao.getTransactionsByAccno(accno));
+                File f = GeneratePdf.generateRecord(filterMap);
                 if(f==null){
                     resp.setStatus(400);
                     resp.setContentType("text/plain");
@@ -101,7 +106,7 @@ public class GenerateRecord extends HttpServlet {
                 out.close();
                 return;
             }else if(format.equals("xls")){
-                File f = GenerateXls.generateRecord(tdao.getTransactionsByAccno(accno));
+                File f = GenerateXls.generateRecord(filterMap);
                 if(f==null){
                     resp.setStatus(400);
                     resp.setContentType("text/plain");
@@ -121,7 +126,7 @@ public class GenerateRecord extends HttpServlet {
             }
         }else if(filter.equals("none")){
             if(format.equals("pdf")){
-                File f = GeneratePdf.generateRecord(tdao.getAllTransaction());
+                File f = GeneratePdf.generateRecord(null);
                 if(f==null){
                     resp.setStatus(400);
                     resp.setContentType("text/plain");
@@ -139,7 +144,7 @@ public class GenerateRecord extends HttpServlet {
                 out.close();
                 return;
             }else if(format.equals("xls")){
-                File f = GenerateXls.generateRecord(tdao.getAllTransaction());
+                File f = GenerateXls.generateRecord(null);
                 if(f==null){
                     resp.setStatus(400);
                     resp.setContentType("text/plain");
