@@ -129,6 +129,7 @@ public class TransactionDao {
             ps.setString(1,src.getAccno());
             ps.setString(2,dest.getAccno());
             ps.setDouble(3, amount);
+            // ps.setObject(4, LocalDate.now());
             ps.setObject(4, LocalDate.now());
             ps.setObject(5, LocalTime.now());
             ps.execute();

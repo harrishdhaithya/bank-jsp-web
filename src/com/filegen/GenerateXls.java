@@ -5,10 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Date;
-import java.util.HashMap;
 import java.io.File;
 import java.io.FileOutputStream;
-
 import com.Singleton.Singleton;
 import com.dao.TransactionDao;
 import com.model.Transaction;
@@ -74,8 +72,9 @@ public class GenerateXls {
             }
             sheet.addMergedRegion(new CellRangeAddress(rownum, rownum+2, 0, 5));
         }else if(filter.get("name").equals("date")){
-            String date = filter.get("date");
-            transactions = tdao.getTransactionsByDate(date);
+            String from = filter.get("from");
+            String to = filter.get("to");
+            transactions = tdao.getTransactionBetweenDate(from,to);
             Row row = sheet.createRow(rownum);
             Cell descCell = row.createCell(0);
             Cell filterCell = row.createCell(3);
@@ -93,7 +92,8 @@ public class GenerateXls {
                 descCell.setCellValue("No Transaction found...");
             }
             String filterDesc = "Filtered By: Date \n"+
-                                "Date of Transaction: "+date;
+                                "From: "+from+"\n"+
+                                "To: "+to;
             filterCell.setCellValue(filterDesc);
             sheet.addMergedRegion(new CellRangeAddress(rownum,rownum+2,0, 2));
             sheet.addMergedRegion(new CellRangeAddress(rownum,rownum+2,3, 5));

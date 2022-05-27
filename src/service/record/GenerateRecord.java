@@ -29,8 +29,9 @@ public class GenerateRecord extends HttpServlet {
             return;
         }
         if(filter.equals("date")){
-            String date = req.getParameter("date");
-            if(date==null){
+            String from = req.getParameter("from");
+            String to = req.getParameter("to");
+            if(from==null||to==null){
                 resp.setStatus(400);
                 resp.setContentType("text/plain");
                 out.println("Something went wrong...");
@@ -38,7 +39,8 @@ public class GenerateRecord extends HttpServlet {
             }
             Map<String,String> filterMap = new HashMap<>();
             filterMap.put("name","date");
-            filterMap.put("date",date);
+            filterMap.put("from",from);
+            filterMap.put("to",to);
             if(format.equals("pdf")){
                 File f = GeneratePdf.generateRecord(filterMap);
                 if(f==null){

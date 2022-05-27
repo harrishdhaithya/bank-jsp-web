@@ -27,6 +27,8 @@ function changeFilter() {
 }
 function extractDate(event){
     event.preventDefault();
+    const loadingBox = document.getElementById('loading');
+    loadingBox.classList.remove('hide-box');
     const filter = document.getElementById('filter').value;
     const format = document.getElementById('format').value;
     var params;
@@ -40,14 +42,22 @@ function extractDate(event){
             filter,format,accno
         });
     }else if(filter=="date"){
-        const date = document.getElementById('date').value;
+        const from = document.getElementById('from').value;
+        const to = document.getElementById('to').value;
+        const fromDate = new Date(from);
+        const toDate = new Date(to);
+        if(toDate.getTime()-fromDate.getTime()<0){
+            alert('Enter a valid period...');
+            return;
+        }
         params= new URLSearchParams({
-            filter,format,date
+            filter,format,from,to
         });
     }
     const ext = (format=='pdf')?'pdf':'xlsx'
     fetch(`/bank/record/generate?${params.toString()}`).then(resp=>{
         if(resp.status==200){
+            loadingBox.classList.add('hide-box');
             resp.blob().then(blob=>{
                 const url = URL.createObjectURL(blob);
                 console.log(url);

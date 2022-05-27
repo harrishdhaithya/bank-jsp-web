@@ -11,6 +11,7 @@
     <script src="../../js/admin/records.js"></script>
 </head>
 <body>
+    
     <%
         if(session.getAttribute("name")==null){
             response.sendRedirect("/bank");
@@ -20,6 +21,9 @@
             }
         }
     %>
+    <div class="loading-screen hide-box" id="loading">
+        <p class="loading-text">Loading...</p>
+    </div>
     <div class="nav-bar">
         <div class="inner-content">
             <img src="../../img/logo.jpg" id="nav-img" alt="">
@@ -52,9 +56,15 @@
                         <option value="xls">Spread Sheet</option>
                     </select>
                 </div>
-                <div class="form-name hide-box" id="date-box">
-                    <div>Date</div>
-                    <input type="date" name="date" id="date" class="form-text-box">
+                <div class="hide-box" id="date-box">
+                    <div class="form-name">
+                        <div>From</div>
+                        <input type="date" name="from" id="from" class="form-text-box">
+                    </div>
+                    <div class="form-name">
+                        <div>To</div>
+                        <input type="date" name="to" id="to" class="form-text-box">
+                    </div>
                 </div>
                 <div class="form-name hide-box" id="acc-box">
                     <div>Account Number</div>
