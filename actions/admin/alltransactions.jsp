@@ -29,7 +29,7 @@
         </div>
         <form action="/bank/logout" method="post" class="logout-form">
             <button type="submit" class="logout-btn">logout</button>
-        </form>
+        </form> 
     </div>
     <div class="container">
         <div class="container-header">
