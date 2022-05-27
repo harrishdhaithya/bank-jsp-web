@@ -53,7 +53,7 @@
                     <div>Format</div>
                     <select name="format" id="format" class="form-text-box">
                         <option value="pdf">PDF</option>
-                        <option value="xls">Spread Sheet</option>
+                        <option value="xls">XLSX</option>
                     </select>
                 </div>
                 <div class="hide-box" id="date-box">
