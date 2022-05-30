@@ -25,11 +25,9 @@ public class PdfConstructor extends PdfBean {
         ImageData imgdata = ImageDataFactory.create("img/logo.jpg");
         Cell logo = new Cell();
         logo.setPadding(0);
-        // Style logoStyle = new Style().setHeight(100f).setWidth(new UnitValue(UnitValue.PERCENT,100)).setHeight(70);
         Style logoStyle = StyleSheet.getHeaderLogoStyle();
         logo.add(new Image(imgdata).addStyle(logoStyle));
         Cell heading = new Cell();
-        // Style headerStyle = new Style().setFontSize(40f).setTextAlignment(TextAlignment.LEFT).setVerticalAlignment(VerticalAlignment.MIDDLE);
         Style headerStyle = StyleSheet.getHeaderStyle();
         heading.add(new Paragraph("Banking System").addStyle(headerStyle));
         header.addCell(logo);
@@ -38,22 +36,11 @@ public class PdfConstructor extends PdfBean {
     }
     public void addSubHeader(String s){
         Paragraph subH = new Paragraph(s);
-        // Style style = new Style();
-        // style.setPadding(5f);
-        // style.setFontSize(28f);
-        // style.setWidth(new UnitValue(UnitValue.PERCENT,100));
-        // style.setBorder(new SolidBorder(DeviceGray.GRAY,1));
-        // style.setBorderTop(new SolidBorder(0));
-        // style.setBorderBottom(new SolidBorder(0));
-        // style.setTextAlignment(TextAlignment.CENTER);
-        // style.setMargin(0);
         subH.addStyle(StyleSheet.getSubHeaderStyle());
         document.add(subH);
     }
     public void addRecordTable(String[] labels,List<Object[]> records){
         Table table = new Table(labels.length); 
-        // table.setBorder(new SolidBorder(DeviceGray.GRAY, 1));
-        // table.setWidth(new UnitValue(UnitValue.PERCENT,100));
         table.addStyle(StyleSheet.getRecordTableStyle());
         for(String label:labels){
             Cell cell = new Cell();
@@ -78,22 +65,12 @@ public class PdfConstructor extends PdfBean {
     }
     public void addDesc(String recordDesc){
         Paragraph recDesc = new Paragraph(recordDesc);
-        // Style style = new Style();
-        // style.setPadding(5f);
-        // style.setFontSize(14f);
-        // style.setWidth(new UnitValue(UnitValue.PERCENT,100));
-        // style.setBorder(new SolidBorder(DeviceGray.GRAY, 1));
-        // style.setBorderBottom(new SolidBorder(0));
-        // style.setMargin(0);
         recDesc.addStyle(StyleSheet.getDescStyle());
         document.add(recDesc);
     }
     public void addDesc(String recordDesc,String filterDesc){
-        Table desc = new Table(new float[]{100,100});
+        Table desc = new Table(2);
         desc.setWidth(new UnitValue(UnitValue.PERCENT,100));
-        // Style style = new Style();
-        // style.setFontSize(14f);
-        // style.setWidth(new UnitValue(UnitValue.PERCENT,100));
         desc.addStyle(StyleSheet.getDescTableStyle());
         Cell cell1 = new Cell();
         cell1.add(new Paragraph(recordDesc));
