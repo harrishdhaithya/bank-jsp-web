@@ -1,2 +1,2 @@
-javac -cp ../../lib/*;WEB-INF/classes -d WEB-INF/classes src/com/model/* src/com/dao/* src/com/Singleton/* src/com/controller/* src/com/filegen/* src/service/auth/* src/service/user/* src/service/record/*
+javac -cp ../../lib/*;WEB-INF/classes -d WEB-INF/classes src/com/model/* src/com/dao/* src/com/Singleton/* src/com/controller/* src/com/filegen/extractor/* src/service/auth/* src/service/user/* src/service/record/*
 catalina start

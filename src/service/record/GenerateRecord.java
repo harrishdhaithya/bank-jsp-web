@@ -10,8 +10,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.filegen.GeneratePdf;
-import com.filegen.GenerateXls;
+
+import com.filegen.generator.GenerateTransactionPdf;
+import com.filegen.generator.GenerateTransactionXls;
 
 public class GenerateRecord extends HttpServlet {
     @Override
@@ -42,7 +43,7 @@ public class GenerateRecord extends HttpServlet {
             filterMap.put("from",from);
             filterMap.put("to",to);
             if(format.equals("pdf")){
-                File f = GeneratePdf.generateRecord(filterMap);
+                File f = GenerateTransactionPdf.generateRecord(filterMap);
                 if(f==null){
                     resp.setStatus(400);
                     resp.setContentType("text/plain");
@@ -60,7 +61,7 @@ public class GenerateRecord extends HttpServlet {
                 out.close();
                 return;
             }else if(format.equals("xls")){
-                File f = GenerateXls.generateRecord(filterMap);
+                File f = GenerateTransactionXls.generateRecord(filterMap);
                 if(f==null){
                     resp.setStatus(400);
                     resp.setContentType("text/plain");
@@ -90,7 +91,7 @@ public class GenerateRecord extends HttpServlet {
             filterMap.put("name","accno");
             filterMap.put("accno",accno);
             if(format.equals("pdf")){
-                File f = GeneratePdf.generateRecord(filterMap);
+                File f = GenerateTransactionPdf.generateRecord(filterMap);
                 if(f==null){
                     resp.setStatus(400);
                     resp.setContentType("text/plain");
@@ -108,7 +109,7 @@ public class GenerateRecord extends HttpServlet {
                 out.close();
                 return;
             }else if(format.equals("xls")){
-                File f = GenerateXls.generateRecord(filterMap);
+                File f = GenerateTransactionXls.generateRecord(filterMap);
                 if(f==null){
                     resp.setStatus(400);
                     resp.setContentType("text/plain");
@@ -128,7 +129,7 @@ public class GenerateRecord extends HttpServlet {
             }
         }else if(filter.equals("none")){
             if(format.equals("pdf")){
-                File f = GeneratePdf.generateRecord(null);
+                File f = GenerateTransactionPdf.generateRecord(null);
                 if(f==null){
                     resp.setStatus(400);
                     resp.setContentType("text/plain");
@@ -146,7 +147,7 @@ public class GenerateRecord extends HttpServlet {
                 out.close();
                 return;
             }else if(format.equals("xls")){
-                File f = GenerateXls.generateRecord(null);
+                File f = GenerateTransactionXls.generateRecord(null);
                 if(f==null){
                     resp.setStatus(400);
                     resp.setContentType("text/plain");
