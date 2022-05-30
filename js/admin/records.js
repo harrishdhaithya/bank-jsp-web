@@ -70,6 +70,7 @@ function extractDate(event){
             }   
             )
         }else{
+            
             alert('Something went wrong...');
         }
     })
