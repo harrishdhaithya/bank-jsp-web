@@ -53,12 +53,7 @@ public class GenerateRecord extends HttpServlet {
             }else{
                 f = GenerateTransactionXls.generateRecord(filterMap);
             }
-            if(f==null){
-                resp.setStatus(400);
-                resp.setContentType("text/plain");
-                out.println("Something went wrong...");
-                return;
-            }
+            
             
         }else if(filter.equals("accno")){
             String accno = req.getParameter("accno");
@@ -66,7 +61,6 @@ public class GenerateRecord extends HttpServlet {
                 resp.setStatus(400);
                 resp.setContentType("text/plain");
                 out.println("Something went wrong...");
-                System.out.println("Account Number is null");
                 return;
             }
             Map<String,String> filterMap = new HashMap<>();
@@ -77,13 +71,7 @@ public class GenerateRecord extends HttpServlet {
             }else{
                 f = GenerateTransactionXls.generateRecord(filterMap);
             }
-            if(f==null){
-                resp.setStatus(400);
-                resp.setContentType("text/plain");
-                out.println("Something went wrong...");
-                System.out.println("File is null");
-                return;
-            }
+            
             
         }else if(filter.equals("none")){
             if(format.equals("pdf")){
@@ -91,12 +79,13 @@ public class GenerateRecord extends HttpServlet {
             }else{
                 f = GenerateTransactionXls.generateRecord(null);
             }
-            if(f==null){
-                resp.setStatus(400);
-                resp.setContentType("text/plain");
-                out.println("Something went wrong...");
-                return;
-            }
+            
+        }
+        if(f==null){
+            resp.setStatus(400);
+            resp.setContentType("text/plain");
+            out.println("Something went wrong...");
+            return;
         }
         FileInputStream fis = new FileInputStream(f);
         resp.setContentType(contentType);
