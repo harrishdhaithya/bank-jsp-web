@@ -1,0 +1,44 @@
+{
+	"name":"records",
+	"entities":{
+	"Transaction":{
+		"Title":"Transaction Records",
+		"labels":["Id","Source","Destination","Amount","Date","Time"],
+		"filters":{
+				"accno":{
+                    "name":"Account Number",
+                    "display":{
+                        "accno":"Account Number"
+                    }
+                },
+                "date":{
+                    "name":"Transaction Date",
+                    "display":{
+                        "from":"From",
+                        "to":"To"
+                    }
+                }
+			}
+	    },
+        "User":{
+            "Title":"User Records",
+            "labels":["Account Number","Name","Phone","Email","Balance"],
+            "data":["Total Users"],
+            "filters":{
+                "balance":{
+                    "name":"Balance",
+                    "display":{
+                        "from":"From",
+                        "to":"To"
+                    }
+                }
+            }
+        },
+        "Admin":{
+            "Title":"Admin Records",
+            "data":["Total Admins"],
+            "labels":["Employee Id","Name","Email","Phone"],
+            "filter":{}
+        }
+	}
+}

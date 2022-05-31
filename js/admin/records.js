@@ -57,8 +57,8 @@ function extractDate(event){
     const ext = (format=='pdf')?'pdf':'xlsx'
     fetch(`/bank/record/generate?${params.toString()}`).then(resp=>{
         if(resp.status==200){
-            loadingBox.classList.add('hide-box');
             resp.blob().then(blob=>{
+                loadingBox.classList.add('hide-box');
                 const url = URL.createObjectURL(blob);
                 console.log(url);
                 const a = document.createElement('a');
@@ -70,7 +70,6 @@ function extractDate(event){
             }   
             )
         }else{
-            
             alert('Something went wrong...');
         }
     })
