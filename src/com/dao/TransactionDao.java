@@ -35,7 +35,7 @@ public class TransactionDao {
         List<Transaction> li = new ArrayList<>();
         try{
             Connection conn = DbConnection.getConnection();
-            String sql = "SELECT * FROM public.\"Transaction\" WHERE date=?";
+            String sql = "SELECT * FROM public.\"Transaction\" WHERE date=? ORDER BY date";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setObject(1,LocalDate.parse(date));
             ResultSet rs = ps.executeQuery();
@@ -58,7 +58,7 @@ public class TransactionDao {
        List<Transaction> li = new ArrayList<>();
        try{
            Connection conn = DbConnection.getConnection();
-            String sql = "SELECT * FROM public.\"Transaction\" where date>=? and date<=?";
+            String sql = "SELECT * FROM public.\"Transaction\" where date>=? and date<=? ORDER BY date";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setObject(1, LocalDate.parse(from));
             ps.setObject(2, LocalDate.parse(to));
@@ -83,7 +83,7 @@ public class TransactionDao {
        List<Transaction> li = new ArrayList<>();
        try{
         Connection conn = DbConnection.getConnection();
-        String sql = "SELECT * FROM public.\"Transaction\" WHERE src=?";
+        String sql = "SELECT * FROM public.\"Transaction\" WHERE src=? ORDER BY date";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1,accno);
         ResultSet rs = ps.executeQuery();
