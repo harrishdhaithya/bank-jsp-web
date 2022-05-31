@@ -2,12 +2,17 @@ package com.filegen.template;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import com.filegen.util.xlsx.XlsxConstructor;
 
 public class XlsxTemplate {
     public static File createXlsx(String docTitle,String docDesc,String filterDesc,String[] labels,List<Object[]> records){
-        XlsxConstructor xlsxConstructor = new XlsxConstructor("records/sample.xlsx", labels.length);
+        SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd_hh_mm_ss");
+        String df = dformat.format(new Date());
+        String filepath = "records/transaction-"+df+".pdf";
+        XlsxConstructor xlsxConstructor = new XlsxConstructor(filepath, labels.length);
         xlsxConstructor.addHeader();
         xlsxConstructor.addSubHeader(docTitle);
         if(filterDesc==null){
@@ -17,6 +22,7 @@ public class XlsxTemplate {
         }
         xlsxConstructor.addLabel(labels);
         xlsxConstructor.addRecords(records);
+        xlsxConstructor.adjustCellSize();
         try {
             xlsxConstructor.write();
         } catch (IOException e) {

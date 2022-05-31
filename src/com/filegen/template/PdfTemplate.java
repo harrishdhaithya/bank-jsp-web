@@ -2,6 +2,8 @@ package com.filegen.template;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import com.filegen.util.pdf.PdfConstructor;
 
@@ -9,7 +11,10 @@ public class PdfTemplate {
     public static File createPdf(String docTitle,String docDesc,String filterDesc,String[] labels,List<Object[]> records){
         PdfConstructor pdfConstructor = null;
         try {
-            pdfConstructor = new PdfConstructor("records/sample.pdf");
+            SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd_hh_mm_ss");
+            String df = dformat.format(new Date());
+            String filepath = "records/transaction-"+df+".pdf";
+            pdfConstructor = new PdfConstructor(filepath);
             pdfConstructor.addHeader();
             pdfConstructor.addSubHeader(docTitle);
             if(filterDesc==null){

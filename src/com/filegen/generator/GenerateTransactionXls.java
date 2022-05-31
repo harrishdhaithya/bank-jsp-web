@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.io.File;
 import com.Singleton.Singleton;
 import com.dao.TransactionDao;
+import com.filegen.template.XlsxTemplate;
 import com.filegen.util.xlsx.XlsxConstructor;
 import com.model.Transaction;
 
@@ -43,34 +44,33 @@ public class GenerateTransactionXls {
         return null;
     }
     public static File generateRecord(Map<String,String> filter){
-        XlsxConstructor builder = new XlsxConstructor("records/test.xlsx", 6);
-        builder.addHeader();
-        builder.addSubHeader("Transaction Records");
-        TransactionDao tdao = Singleton.getTransactionDao();
+        TransactionDao tdao = new TransactionDao();
         List<Transaction> transactions = null;
+        String docDesc = null;
+        String filterDesc = null;
+        String[] labels = {"Id","Source","Destination","Amount","Date","Time"};
+        List<Object[]> records = new ArrayList<>();
         if(filter==null){
             transactions = tdao.getAllTransaction();
-            builder.addDesc(getTransactionData(transactions));
-        }else if(filter.get("name").equals("date")){
-            String from = filter.get("from");
-            String to = filter.get("to");
-            transactions = tdao.getTransactionBetweenDate(from,to);
-            builder.addDesc(getTransactionData(transactions), getFilterData(filter));
+            docDesc = getTransactionData(transactions);
         }else if(filter.get("name").equals("accno")){
             String accno = filter.get("accno");
             transactions = tdao.getTransactionsByAccno(accno);
-            builder.addDesc(getTransactionData(transactions),getFilterData(filter));
+            docDesc = getTransactionData(transactions);
+            filterDesc = getFilterData(filter);
+        }else if(filter.get("name").equals("date")){
+            String from = filter.get("from");
+            String to = filter.get("to");
+            transactions = tdao.getTransactionBetweenDate(from, to);
+            docDesc = getTransactionData(transactions);
+            filterDesc = getFilterData(filter);
         }
-        String[] labels = {"ID","Source","Destination","Amount","Date","Time"};
-        builder.addLabel(labels);
-        List<Object[]> records = new ArrayList<>();
         for(Transaction t:transactions){
             Object[] o = {t.getId(),t.getSrc(),t.getDest(),t.getAmount(),t.getDate(),t.getTime()};
             records.add(o);
         }
-        builder.addRecords(records);
-        builder.adjustCellSize();
-        return builder.getFile();
+       File f = XlsxTemplate.createXlsx("Transaction Records", docDesc, filterDesc, labels, records);
+       return f;
     }
        
 }
