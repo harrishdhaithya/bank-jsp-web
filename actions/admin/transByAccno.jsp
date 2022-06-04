@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html"%>
 <%@ page import="com.model.Transaction,com.dao.TransactionDao,com.Singleton.Singleton,java.util.List"%>
 <%
+    response.setHeader("Access-Control-Allow-Origin", "*"); 
     String accno = request.getParameter("accno");
     TransactionDao tdao = Singleton.getTransactionDao();
     List<Transaction> transactions = tdao.getTransactionsByAccno(accno);

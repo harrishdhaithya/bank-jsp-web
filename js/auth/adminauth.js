@@ -18,13 +18,33 @@ function adminsignin(event) {
     }).then(resp=>{
         if(resp.status!=200){
             console.log(resp.body);
-        }
-        resp.text().then(res=>console.log(res));
-        if(resp.redirected){
-            location.href=resp.url;
+            location.href='/bank/auth/evalsecret.jsp';
+            return;
         }
     }).catch(err=>{
         alert(err);
         console.log(err);
     });
+}
+
+
+function handleCredentialResponse(cred){
+    console.log(cred.clientId);
+    console.log(cred.credential);
+    fetch('/bank/login/google',{
+        method:"POST",
+        body:JSON.stringify({
+        code:cred.credential,
+        role:"admin"
+    })
+    }).then(resp=>{
+        if(resp.status==200){
+            location.href="/bank/menu/adminmenu.jsp";
+            return;
+        }else{
+            resp.text().then(text=>{
+                alert(text);
+            });
+        }
+    })
 }

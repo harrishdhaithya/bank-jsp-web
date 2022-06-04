@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +24,7 @@ public class UserLogin extends HttpServlet {
         while((s=br.readLine())!=null){
             sb.append(s);
         }
+        
         PrintWriter out = resp.getWriter();
         try{
             JSONObject obj = new JSONObject(sb.toString());
@@ -32,7 +34,7 @@ public class UserLogin extends HttpServlet {
                 email==null ||
                 password==null
             ){
-                resp.setStatus(500);
+                resp.setStatus(400);
                 resp.setContentType("text/html");
                 out.println("All the Fields are required...");
                 return;
@@ -41,22 +43,21 @@ public class UserLogin extends HttpServlet {
             User user = ud.getUserByEmail(email);
             UserSecretDao udao = Singleton.getUserSecretDao();
             if(user==null){
-                resp.setStatus(500);
+                resp.setStatus(400);
                 resp.setContentType("text/html");
                 out.println("Incorrect Email...");
                 return;
             }
             if(user.evalPassword(password)){
                 HttpSession session = req.getSession(true);
-                // session.setAttribute("name", user.getFname());
-                // session.setAttribute("accno", user.getAccno());
-                // session.setAttribute("email", user.getEmail());
-                // session.setAttribute("role", "user");
                 session.setAttribute("user", user);
                 session.setAttribute("secret", udao.getSecret(user.getAccno()));
                 session.setAttribute("role", "user");
+                // Cookie c = new Cookie("JSESSIONID", session.getId());
+                // resp.addCookie(c);
                 resp.setStatus(200);
-                resp.sendRedirect("/bank/auth/evalsecret.jsp");
+                out.print(session.getId());
+                // resp.sendRedirect("/bank/auth/evalsecret.jsp");
                 return;
             }else{
                 resp.setStatus(400);

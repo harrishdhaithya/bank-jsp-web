@@ -8,9 +8,13 @@ function evalCode(event){
     const param = new URLSearchParams({code:code.trim()});
     fetch(`user/secret?${param.toString()}`).then(resp=>{
         if(resp.status==200){
-            if(resp.redirected){
-                location.href=resp.url;
-            }
+            resp.json().then(res=>{
+                if(res.role=='admin'){
+                    location.href='/bank/menu/adminmenu.jsp'
+                }else{
+                    location.href='/bank/menu/usermenu.jsp'
+                }
+            })
         }else{
             resp.text().then(res=>{
                 alert(res);

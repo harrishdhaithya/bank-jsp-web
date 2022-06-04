@@ -12,6 +12,7 @@ public class Logout extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession(false);
         if(session==null){
+            resp.setStatus(400);
             resp.sendRedirect("/bank");
             return;
         }

@@ -83,7 +83,7 @@ public class TransactionDao {
        List<Transaction> li = new ArrayList<>();
        try{
         Connection conn = DbConnection.getConnection();
-        String sql = "SELECT * FROM public.\"Transaction\" WHERE src=? ORDER BY date";
+        String sql = "SELECT * FROM public.\"Transaction\" WHERE src=? ORDER BY id desc";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1,accno);
         ResultSet rs = ps.executeQuery();
@@ -129,7 +129,6 @@ public class TransactionDao {
             ps.setString(1,src.getAccno());
             ps.setString(2,dest.getAccno());
             ps.setDouble(3, amount);
-            // ps.setObject(4, LocalDate.now());
             ps.setObject(4, LocalDate.now());
             ps.setObject(5, LocalTime.now());
             ps.execute();

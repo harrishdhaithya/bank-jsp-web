@@ -3,6 +3,12 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
         http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
 version="2.5">
+    <session-config>
+        <session-timeout>30</session-timeout> 
+        <cookie-config>
+            <http-only>false</http-only>
+        </cookie-config>
+    </session-config>
     <servlet>
         <servlet-name>adminauth</servlet-name>
         <servlet-class>service.auth.AdminLogin</servlet-class>
@@ -74,5 +80,66 @@ version="2.5">
     <servlet-mapping>
         <servlet-name>record</servlet-name>
         <url-pattern>/record/generate</url-pattern>
+    </servlet-mapping>
+    <!--USER API Routes -->
+    <servlet>
+        <servlet-name>getuser</servlet-name>
+        <servlet-class>api.user.FindUser</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>getuser</servlet-name>
+        <url-pattern>/api/user/get</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>allusers</servlet-name>
+        <servlet-class>api.user.AllUsers</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>allusers</servlet-name>
+        <url-pattern>/api/users/all</url-pattern>
+    </servlet-mapping>
+    <!-- Transaction API Route -->
+    <servlet>
+        <servlet-name>transbyaccno</servlet-name>
+        <servlet-class>api.transaction.TransactionByAccno</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>transbyaccno</servlet-name>
+        <url-pattern>/api/transaction/accno</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>transbydate</servlet-name>
+        <servlet-class>api.transaction.TransactionByDate</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>transbydate</servlet-name>
+        <url-pattern>/api/transaction/date</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>alltransactions</servlet-name>
+        <servlet-class>api.transaction.AllTransactions</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>alltransactions</servlet-name>
+        <url-pattern>/api/transactions</url-pattern>
+    </servlet-mapping>
+    <!-- Filter -->
+    <filter>
+        <filter-name>CorsFilter</filter-name>
+        <filter-class>filter.CorsFilter</filter-class>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>CorsFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!-- Google Login -->
+     <servlet>
+        <servlet-name>googlelogin</servlet-name>
+        <servlet-class>service.googleauth.GoogleLogin</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>googlelogin</servlet-name>
+        <url-pattern>/login/google</url-pattern>
     </servlet-mapping>
 </web-app>

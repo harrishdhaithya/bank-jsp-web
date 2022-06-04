@@ -8,8 +8,13 @@
     <title>Bank Application</title>
     <link rel="stylesheet" href="../css/style.css">
     <script src="../js/auth/adminauth.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
+    <div id="g_id_onload"
+         data-client_id="875838647414-pt8dh19mhtm9osjevk8gj0fdukq2s1mt.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse">
+    </div>
     <%
         if(session.getAttribute("name")!=null){
             if(session.getAttribute("role").equals("admin")){
@@ -44,6 +49,7 @@
                 <input type="submit" class="form-submit-btn" >
             </form>
             <button class="form-submit-btn" onclick="location.href='/bank'">Home</button>
+            <div class="g_id_signin google-signin" data-type="standard"></div>
         </div>
     </div>
 </body>

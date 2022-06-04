@@ -18,10 +18,8 @@ function userLogin(event){
         body:JSON.stringify({email,password})
     }).then(resp=>{
         if(resp.status==200){
-            if(resp.redirected){
-                location.href=resp.url;
-                return;
-            }
+            location.href='/bank/auth/evalsecret.jsp';
+            return;
         }else{
             resp.text().then(resp=>{
                 alert(resp);
@@ -32,5 +30,26 @@ function userLogin(event){
     }).catch(err=>{
         alert(err);
         location.reload();
+    });
+}
+
+function handleCredentialResponse(cred){
+    console.log(cred.clientId);
+    console.log(cred.credential);
+    fetch('/bank/login/google',{
+        method:"POST",
+        body:JSON.stringify({
+        code:cred.credential,
+        role:"user"
+    })
+    }).then(resp=>{
+        if(resp.status==200){
+            location.href="/bank/menu/usermenu.jsp";
+            return;
+        }else{
+            resp.text().then(text=>{
+                alert(text);
+            });
+        }
     });
 }

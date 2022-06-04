@@ -57,6 +57,7 @@ public class AdminLogin extends HttpServlet {
             }
             
         }catch(JSONException ex){
+            resp.setStatus(400);
             out.println(ex.toString());
         }
 

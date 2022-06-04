@@ -34,11 +34,12 @@ public class Otp extends HttpServlet {
             UserSecret us = new UserSecret(u.getAccno(), secret);
             UserDao udao = Singleton.getUserDao();
             boolean success = udao.saveUser(u)&&usdao.saveSecret(us);
+
             if(success){
                 resp.setContentType("text/plain");
-                out.println(secret);
                 session.invalidate();
                 resp.setStatus(200);
+                out.println(secret);
                 return;
             }
             session.invalidate();
