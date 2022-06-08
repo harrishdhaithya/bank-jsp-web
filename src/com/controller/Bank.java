@@ -10,8 +10,6 @@ import com.model.UserSecret;
 
 
 public class Bank {
-	public static User loggedInUser=null;
-	public static Admin loggedInAdmin=null;
 	public static boolean signup(String fname, String lname, String phone, String email, String password,double balance) {
 		if(phone.length()!=10) {
 			return false;
