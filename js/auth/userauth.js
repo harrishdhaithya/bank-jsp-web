@@ -34,8 +34,6 @@ function userLogin(event){
 }
 
 function handleCredentialResponse(cred){
-    console.log(cred.clientId);
-    console.log(cred.credential);
     fetch('/bank/login/google',{
         method:"POST",
         body:JSON.stringify({

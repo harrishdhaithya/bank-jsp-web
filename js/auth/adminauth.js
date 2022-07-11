@@ -16,9 +16,12 @@ function adminsignin(event) {
             password:password
         })
     }).then(resp=>{
-        if(resp.status!=200){
+        if(resp.status==200){
             console.log(resp.body);
             location.href='/bank/auth/evalsecret.jsp';
+            return;
+        }else{
+            alert('Something went wrong...')
             return;
         }
     }).catch(err=>{
