@@ -27,7 +27,7 @@ public class Transaction {
         this.src=u;
     }
     public void setDest(String u){
-        this.src=u;
+        this.dest=u;
     }
     public void setAmount(double amount){
         this.amount=amount;
