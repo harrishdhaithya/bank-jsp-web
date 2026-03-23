@@ -32,7 +32,7 @@
     </div>
     <div class="container">
         <div class="container-header">
-            Notedown Your secret in Google Authenticator
+            Notedown Your secret in Your Authenticator App
         </div>
         <div class="container-body">
             <p class="user-box">
