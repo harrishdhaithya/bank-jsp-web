@@ -17,7 +17,8 @@ public class XlsxTemplate {
         String[] labels = MetaDataHandler.getLabels(cls);
         SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd_hh_mm_ss");
         String df = dformat.format(new Date());
-        String filepath = "records/transaction-"+df+".pdf";
+        String filepath = "records/transaction-"+df+".xlsx";
+        new File("records").mkdirs();
         XlsxConstructor xlsxConstructor = new XlsxConstructor(filepath, labels.length);
         xlsxConstructor.addHeader();
         xlsxConstructor.addSubHeader(docTitle);

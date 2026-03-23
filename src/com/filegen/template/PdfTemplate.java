@@ -20,6 +20,7 @@ public class PdfTemplate {
             SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd_hh_mm_ss");
             String df = dformat.format(new Date());
             String filepath = "records/transaction-"+df+".pdf";
+            new File("records").mkdirs();
             pdfConstructor = new PdfConstructor(filepath);
             pdfConstructor.addHeader();
             pdfConstructor.addSubHeader(docTitle);
