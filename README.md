@@ -1,4 +1,4 @@
-# Bank JSP Web
+# Bank Application Using Apache Tomcat, JSP and Servlet
 
 A JSP/Servlet-based banking web application with embedded Tomcat 9.
 
